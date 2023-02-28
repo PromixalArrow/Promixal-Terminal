@@ -1,2 +1,2 @@
-# Promixal-Terminal V 0.1
-A little project, don't take seriously
+# Promixal-Terminal V 0.6
+FIRST BETA VERSION OF PT!!!! WOOOOOOOOO!
