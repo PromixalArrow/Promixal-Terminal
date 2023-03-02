@@ -1,7 +1,9 @@
 import subprocess
+import subprocess
+import tkinter as tk
+import tkinter
 from tkinter import *
 from tkinter.filedialog import asksaveasfilename, askopenfilename
-import subprocess
 import random
 import platform
 import socket
@@ -110,15 +112,15 @@ while True:
         print(f"Your name is {name}. Your Favourite Colour Is {colour}. Your Age Is {age}.")
     if code == "save":
         save = input("What Would You Like To Save: ")
-        with open("save/save.txt", "a") as f:
+        with open("save.txt", "a") as f:
             f.write(save)
-        with open("save/save.txt", "a") as f:
+        with open("save.txt", "a") as f:
             f.write("\n")
     if code == "read saves":
-        with open("save/save.txt", "r") as f:
+        with open("save.txt", "r") as f:
             print(f.read())
     if code == "empty saves":
-        with open("save/save.txt", "w") as f:
+        with open("save.txt", "w") as f:
             f.write("")
         print("Emptied Saves!")
     if code == "create command":
@@ -186,13 +188,12 @@ while True:
         else:
             print("Invalid Type!")
     if code == "pide":
-        print("Opening Pide........\nSuccessful!")
         file_path = ""
-
+        root = tk.Tk()
         def set_file_path(path):
             global file_path
             file_path = path
-        def run():
+        def run_():
             code = editor.get("1.0", END)
             exec(code)
         def save_as():
@@ -212,33 +213,43 @@ while True:
                 editor.insert("1.0", code)
                 set_file_path(path)
         def run():
+            if file_path == "":
+                save_prompt = Toplevel()
+                text = Label(save_prompt, text="Please Save The File!")
+                text.pack()
+                return
             command = f'python {file_path}'
             process = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
             output, error = process.communicate()
             code_output.insert("1.0", output)
+            code_output.insert("1.0", error)
+        def help():
+            save_prompt = Toplevel()
+            text = Label(save_prompt, text="This Is A Small IDE With Simple Elements! I Have Plan's For Pide In The Future.")
+            text.pack()
 
-        compiler = Tk()
-        compiler.title("Pide")
+        root.title("Pide")
 
-        menu_bar = Menu(compiler)
+        menu_bar = Menu(root)
         file_menu = Menu(menu_bar, tearoff=0)
         file_menu.add_command(label="Open", command=open_file)
         file_menu.add_command(label="Save", command=save_as)
         file_menu.add_command(label="Save As", command=save_as)
         file_menu.add_command(label="Exit", command=exit)
+        file_menu.add_command(label="Help", command=help)
         menu_bar.add_cascade(label="File", menu=file_menu)
 
         run_bar = Menu(menu_bar, tearoff=0)
         run_bar.add_command(label="Run", command=run)
         menu_bar.add_cascade(label="Run", menu=run_bar)
-        compiler.config(menu=menu_bar)
+        root.config(menu=menu_bar)
 
         editor = Text(height=20)
         editor.pack()
         code_output = Text(height=10)
         code_output.pack()
-        compiler.mainloop()
-
+        root.mainloop()
+        root.mainloop()
     if code == "help":
         print("To Use Me Make Some Code")
         print("These Are My Commands!\nping: Will Ping A Website Of Your Choice\nlocal: Will Tell You Your IPS And Device Name\ndate: Will Tell You The Date\nlist: Will List Folders In C Drive\nlist -a: Will List Files In Any Directory\necho me: Will Echo You\nwhat are you: Will Tell You What I Am\nwho created you: Will Tell You Who Created Me\nrandom number: Will Print A Random Number\nrandom word: Will Print A Random Word\nrcn: Will Make A Random Number, Doesn't need Input\nrcw: Will Make A Random Word, Doesn't need Input\ntlai: Will Make A Temporary AI\nsave: Will Create A Save\nread saves: Will Read Saves\nempty saves: Will Empty Saves\ncreate command: Will Create A Temporary Command\nnum guess: Will Run A Number Guessing Game\noperators: Will Tell You All The Operators\np operators: Will Tell You All The Programming Operators\nw_t: Will Convert Lbs To Kg, Or Kg To Lbs\ndraw: Will Draw A Human, Dog Or Smiley Face\nhelp: Will Help With Commands.")
