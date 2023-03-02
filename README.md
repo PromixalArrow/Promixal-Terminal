@@ -1,2 +1,2 @@
-# Promixal-Terminal V 0.6
-FIRST BETA VERSION OF PT!!!! WOOOOOOOOO!
+# Promixal-Terminal V 0.7
+Pide Updated Hevily!
